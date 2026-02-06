@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Búsqueda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
+
+        .results {
+            padding: 20px;
+            background: #16213e;
+            border-radius: 8px;
+        }
+
+        .result-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: #0f3460;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .result-item:hover {
+            background: #1a5490;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Test de Búsqueda Global</h1>
+
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Escribe para buscar...">
+    </div>
+
+    <div class="results" id="results">
+        <p>Escribe algo para buscar...</p>
+    </div>
+
+    <div id="debug" style="margin-top: 20px; padding: 20px; background: #16213e; border-radius: 8px;">
+        <h3>Información de Debug:</h3>
+        <p id="debug-info">Cargando...</p>
+    </div>
+
+    <script>
+        // Cargar datos
+        let allPuntos = [];
+
+        fetch('datos_puntos.json')
+            .then(response => response.json())
+            .then(data => {
+                allPuntos = data;
+                document.getElementById('debug-info').innerHTML = `
+                    <strong>Puntos cargados:</strong> ${allPuntos.length}<br>
+                    <strong>Primer punto:</strong> ${allPuntos[0]?.NOMBREPV || 'N/A'}<br>
+                    <strong>Event listener:</strong> Configurado ✓
+                `;
+            })
+            .catch(error => {
+                document.getElementById('debug-info').innerHTML = `
+                    <strong>Error:</strong> ${error.message}
+                `;
+            });
+
+        // Configurar event listener
+        const searchInput = document.getElementById('search-input');
+        const resultsDiv = document.getElementById('results');
+
+        searchInput.addEventListener('input', function (e) {
+            const term = e.target.value.trim().toLowerCase();
+            console.log('Buscando:', term);
+
+            if (term.length < 2) {
+                resultsDiv.innerHTML = '<p>Escribe al menos 2 caracteres...</p>';
+                return;
+            }
+
+            const results = allPuntos.filter(punto => {
+                const nombre = (punto.NOMBREPV || '').toLowerCase();
+                const codigo = (punto.CODIGOPV || '').toLowerCase();
+                return nombre.includes(term) || codigo.includes(term);
+            }).slice(0, 10);
+
+            console.log('Resultados encontrados:', results.length);
+
+            if (results.length === 0) {
+                resultsDiv.innerHTML = '<p>No se encontraron resultados</p>';
+                return;
+            }
+
+            resultsDiv.innerHTML = results.map(punto => `
+                <div class="result-item">
+                    <strong>${punto.NOMBREPV || 'Sin nombre'}</strong><br>
+                    <small>Código: ${punto.CODIGOPV || 'N/A'}</small>
+                </div>
+            `).join('');
+        });
+
+        console.log('Test de búsqueda inicializado');
+    </script>
+</body>
+
+</html>
