@@ -1,0 +1,16 @@
+# Base de datos SQLite (se crea en el servidor)
+mantenimientos.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+.env
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

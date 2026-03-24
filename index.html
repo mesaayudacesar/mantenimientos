@@ -22,6 +22,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css?v=2.0">
+
+    <!-- SheetJS (XLSX) para exportación a Excel -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 </head>
 
 <body>
@@ -155,6 +158,24 @@
                     </div>
                 </div>
             </div>
+
+            <div class="filter-section">
+                <div class="filter-header collapsed" data-filter="mantenimiento">
+                    <i class="fas fa-tools"></i>
+                    <h3>Mantenimiento</h3>
+                    <span class="filter-count" id="mantenimiento-count">0</span>
+                    <i class="fas fa-chevron-down collapse-icon"></i>
+                </div>
+                <div class="filter-content collapsed" id="mantenimiento-content">
+                    <div class="filter-list" id="mantenimiento-list">
+                        <!-- Generado dinámicamente -->
+                    </div>
+                    <button class="btn-export" id="btn-export-mantenimiento">
+                        <i class="fas fa-file-export"></i>
+                        <span>Exportar Reporte</span>
+                    </button>
+                </div>
+            </div>
         </aside>
 
         <!-- Toggle sidebar button -->
@@ -183,6 +204,45 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+    <!-- Modal de Mantenimiento -->
+    <div class="modal-overlay" id="modal-mantenimiento">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-tools"></i> Editar Mantenimiento Preventivo</h2>
+                <button class="modal-close" id="btn-close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="punto-info">
+                    <p><strong>Punto:</strong> <span id="modal-punto-nombre">-</span></p>
+                    <p><strong>Código:</strong> <span id="modal-punto-codigo">-</span></p>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="modal-mantenimiento-realizado">
+                        <span class="checkbox-custom"></span>
+                        <span>Mantenimiento Preventivo Realizado</span>
+                    </label>
+                </div>
+                <div class="form-group" id="ticket-group" style="display: none;">
+                    <label for="modal-numero-ticket">Número de Ticket</label>
+                    <input type="text" id="modal-numero-ticket" placeholder="Ej: TICKET-12345" maxlength="50">
+                </div>
+                <div class="form-group" id="fecha-group" style="display: none;">
+                    <label for="modal-fecha-mantenimiento">Fecha de Mantenimiento</label>
+                    <input type="date" id="modal-fecha-mantenimiento">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="btn-cancelar-modal">Cancelar</button>
+                <button class="btn-primary" id="btn-guardar-mantenimiento">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- App JS -->
     <script src="app.js?v=2.0"></script>

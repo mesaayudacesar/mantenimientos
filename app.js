@@ -24,6 +24,9 @@ let stats = {
 const CESAR_CENTER = [10.4631, -73.2532];
 const DEFAULT_ZOOM = 10;
 
+// URL de la base de datos en Google Sheets (en formato CSV)
+const GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/1UcaJzfkIfTBmyYiDHuZBq0Au1jxIwkHp/export?format=csv';
+
 // ===== Inicialización =====
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('Iniciando aplicación del mapa...');
@@ -147,17 +150,57 @@ function createCesarMask() {
 // ===== Cargar Datos =====
 async function loadData() {
     try {
-        console.log('Cargando datos...');
-        const response = await fetch('datos_puntos.json');
+        console.log('Cargando datos desde Google Sheets...');
+        const response = await fetch(GOOGLE_SHEETS_URL);
 
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
         }
 
-        allPuntos = await response.json();
+        const dataBuffer = await response.arrayBuffer();
+
+        // Usar TextDecoder para asegurar que los bytes se interpreten como UTF-8
+        const decoder = new TextDecoder('utf-8');
+        const csvText = decoder.decode(dataBuffer);
+
+        // Leer el CSV como string con la codificación correcta
+        const workbook = XLSX.read(csvText, { type: 'string' });
+
+        // Asumiendo que los datos están en la primera pestaña
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+
+        // Convertir a JSON
+        const rawPuntos = XLSX.utils.sheet_to_json(worksheet, {
+            defval: "",           // Valor por defecto para celdas vacías
+            raw: false,          // Forzar que todos los valores sean strings
+            blankrows: false
+        });
+
+        // Normalizar nombres de columnas, valores Unicode y filtrar puntos inválidos
+        allPuntos = rawPuntos.map(rp => {
+            const normalizedPunto = {};
+            Object.keys(rp).forEach(key => {
+                // Normalizar clave: trim y colapsar múltiples espacios a uno solo
+                const normalizedKey = key.trim().replace(/\s+/g, ' ');
+                // Normalizar el valor: asegurar que sea string y normalizar Unicode
+                let value = rp[key];
+                if (typeof value === 'string') {
+                    // Normalizar Unicode (NFKC) para asegurar que los caracteres se manejen correctamente
+                    value = value.normalize('NFKC');
+                }
+                normalizedPunto[normalizedKey] = value;
+            });
+            return normalizedPunto;
+        }).filter(punto => {
+            const lat = parseFloat(punto.LATITUD);
+            const lng = parseFloat(punto.LONGITUD);
+            return !isNaN(lat) && !isNaN(lng);
+        });
+
         filteredPuntos = [...allPuntos];
 
-        console.log(`✓ Cargados ${allPuntos.length} puntos`);
+        console.log(`✓ Cargados ${allPuntos.length} puntos válidos desde Google Sheets`);
 
         // Procesar datos
         processData();
@@ -169,19 +212,26 @@ async function loadData() {
 
     } catch (error) {
         console.error('Error al cargar datos:', error);
-        alert('Error al cargar los datos. Por favor, verifica que el archivo datos_puntos.json existe y es válido.');
+        alert('Error al cargar los datos desde Google Sheets. Por favor, verifica tu conexión a internet.');
     }
 }
 
 // ===== Procesar Datos =====
 function processData() {
+    // Cargar datos de mantenimiento (async)
+    loadMantenimientoData().then(() => {
+        // Renderizar marcadores de nuevo una vez cargados los datos de mantenimiento
+        renderMarkers();
+        renderMantenimientoFilter();
+    });
+
     // Obtener valores únicos
     const tecnicos = new Set();
     const cdas = new Set();
     const tipos = new Set();
 
     allPuntos.forEach(punto => {
-        if (punto['TECNICO  ASIGNADO ']) tecnicos.add(punto['TECNICO  ASIGNADO '].trim());
+        if (punto['TECNICO ASIGNADO']) tecnicos.add(punto['TECNICO ASIGNADO'].trim());
         if (punto['NOMBRE DE CENTRO DE COSTO']) cdas.add(punto['NOMBRE DE CENTRO DE COSTO'].trim());
         if (punto['TIPO']) tipos.add(punto['TIPO'].trim());
     });
@@ -219,6 +269,7 @@ function renderFilters() {
     renderTecnicosFilter();
     renderCDAsFilter();
     renderTiposFilter();
+    renderMantenimientoFilter();
 }
 
 function renderTecnicosFilter() {
@@ -228,7 +279,7 @@ function renderTecnicosFilter() {
     // Contar puntos por técnico
     const counts = {};
     allPuntos.forEach(punto => {
-        const tecnico = punto['TECNICO  ASIGNADO ']?.trim();
+        const tecnico = punto['TECNICO ASIGNADO']?.trim();
         if (tecnico) {
             counts[tecnico] = (counts[tecnico] || 0) + 1;
         }
@@ -330,6 +381,9 @@ function handleFilterChange(type, value, checked) {
             case 'tipo':
                 selectedTipos.add(value);
                 break;
+            case 'mantenimiento':
+                selectedMantenimiento.add(value);
+                break;
         }
     } else {
         filterItem.classList.remove('active');
@@ -344,6 +398,9 @@ function handleFilterChange(type, value, checked) {
             case 'tipo':
                 selectedTipos.delete(value);
                 break;
+            case 'mantenimiento':
+                selectedMantenimiento.delete(value);
+                break;
         }
     }
 
@@ -355,7 +412,7 @@ function applyFilters() {
     filteredPuntos = allPuntos.filter(punto => {
         // Filtro de técnicos
         if (selectedTecnicos.size > 0) {
-            const tecnico = punto['TECNICO  ASIGNADO ']?.trim();
+            const tecnico = punto['TECNICO ASIGNADO']?.trim();
             if (!tecnico || !selectedTecnicos.has(tecnico)) {
                 return false;
             }
@@ -373,6 +430,20 @@ function applyFilters() {
         if (selectedTipos.size > 0) {
             const tipo = punto['TIPO']?.trim();
             if (!tipo || !selectedTipos.has(tipo)) {
+                return false;
+            }
+        }
+
+        // Filtro de mantenimiento (funciona como OR: mostrar puntos que cumplan al menos una condición)
+        if (selectedMantenimiento.size > 0) {
+            const mantenimiento = getPuntoMantenimiento(punto.CODIGOPV);
+            const tieneMantenimiento = mantenimiento.realizado;
+
+            const cumpleFiltro =
+                (selectedMantenimiento.has('con-mantenimiento') && tieneMantenimiento) ||
+                (selectedMantenimiento.has('sin-mantenimiento') && !tieneMantenimiento);
+
+            if (!cumpleFiltro) {
                 return false;
             }
         }
@@ -414,7 +485,7 @@ function renderMarkers() {
 
         // Crear marcador
         const marker = L.marker([lat, lng], {
-            icon: createCustomIcon(punto.TIPO)
+            icon: createCustomIcon(punto)
         });
 
         // Agregar popup
@@ -431,10 +502,17 @@ function renderMarkers() {
 }
 
 // ===== Crear Ícono Personalizado =====
-function createCustomIcon(tipo) {
+function createCustomIcon(punto) {
+    const tipo = punto.TIPO || punto; // Soportar tanto punto completo como tipo solo
+    const codigoPV = punto.CODIGOPV || null;
+
     // Determinar si es un Centro de Costos (CDA) basado en el tipo
     const tipoUpper = tipo?.trim().toUpperCase();
     const isCDA = tipoUpper === 'CDA' || tipoUpper === 'CENTRO DE COSTOS';
+
+    // Verificar si tiene mantenimiento
+    const mantenimiento = codigoPV ? getPuntoMantenimiento(codigoPV) : { realizado: false };
+    const tieneMantenimiento = mantenimiento.realizado;
 
     // Configuración de iconos con tamaños diferenciados
     const tipoConfig = {
@@ -478,9 +556,14 @@ function createCustomIcon(tipo) {
 
     const config = tipoConfig[tipoUpper] || tipoConfig.DEFAULT;
 
+    // Agregar estrella dorada si tiene mantenimiento
+    const maintenanceBadge = tieneMantenimiento ?
+        `<div class="maintenance-badge"><i class="fas fa-star"></i></div>` : '';
+
     const iconHtml = `
-        <div class="custom-marker ${isCDA ? 'cda-marker' : ''}" style="background-color: ${config.color}; width: ${config.size}px; height: ${config.size}px;">
+        <div class="custom-marker ${isCDA ? 'cda-marker' : ''}" style="background-color: ${config.color}; width: ${config.size}px; height: ${config.size}px; position: relative;">
             <i class="fas ${config.icon}" style="font-size: ${config.iconSize}px;"></i>
+            ${maintenanceBadge}
         </div>
     `;
 
@@ -504,6 +587,27 @@ function createPopupContent(punto) {
 
     const tipoUpper = punto.TIPO?.trim().toUpperCase();
     const tipoConfig = tipoIcons[tipoUpper] || { icon: 'fa-map-marker-alt', color: '#f59e0b' };
+
+    // Obtener información de mantenimiento
+    const mantenimiento = getPuntoMantenimiento(punto.CODIGOPV);
+    const tieneMantenimiento = mantenimiento.realizado;
+
+    // Crear badge de estado de mantenimiento
+    const maintenanceStatusHtml = tieneMantenimiento ? `
+        <div class="maintenance-status completed">
+            <i class="fas fa-star"></i>
+            <span>Mantenimiento Realizado</span>
+        </div>
+        <div style="margin-top: 8px; font-size: 0.75rem; color: var(--text-secondary);">
+            <div><strong>Ticket:</strong> ${mantenimiento.numeroTicket}</div>
+            <div><strong>Fecha:</strong> ${new Date(mantenimiento.fechaMantenimiento).toLocaleDateString('es-CO')}</div>
+        </div>
+    ` : `
+        <div class="maintenance-status pending">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Sin Mantenimiento</span>
+        </div>
+    `;
 
     return `
         <div class="popup-content">
@@ -540,7 +644,7 @@ function createPopupContent(punto) {
                 <div class="info-row">
                     <i class="fas fa-user-tie"></i>
                     <span class="info-label">Técnico:</span>
-                    <span class="info-value">${punto['TECNICO  ASIGNADO '] || 'No asignado'}</span>
+                    <span class="info-value">${punto['TECNICO ASIGNADO'] || 'No asignado'}</span>
                 </div>
                 
                 ${punto.TELEFONO ? `
@@ -558,6 +662,21 @@ function createPopupContent(punto) {
                     <span class="info-value"><a href="mailto:${punto.EMAIL}">${punto.EMAIL}</a></span>
                 </div>
                 ` : ''}
+                
+                <hr style="margin: 12px 0; border: none; border-top: 1px solid var(--border-color);">
+                
+                ${maintenanceStatusHtml}
+
+                <div class="popup-actions">
+                    <button class="btn-edit-maintenance" onclick="openMantenimientoModal(${JSON.stringify(punto).replace(/"/g, '&quot;')})">
+                        <i class="fas fa-edit"></i>
+                        Editar Mantenimiento
+                    </button>
+                    <button class="btn-compartir-ubicacion" onclick="compartirUbicacion(${punto.LATITUD}, ${punto.LONGITUD}, '${(punto.NOMBREPV || '').replace(/'/g, "\\'")}')"
+                        title="Copiar enlace de Google Maps">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
             </div>
         </div>
     `;
@@ -618,6 +737,15 @@ function setupEventListeners() {
             console.log(`✓ Filtro ${filterName} ${content.classList.contains('collapsed') ? 'colapsado' : 'expandido'}`);
         });
     });
+
+    // Configurar modal de mantenimiento
+    setupMantenimientoModalListeners();
+
+    // Botón de exportación de mantenimiento
+    const btnExport = document.getElementById('btn-export-mantenimiento');
+    if (btnExport) {
+        btnExport.addEventListener('click', exportarMantenimientos);
+    }
 }
 
 // ===== Resetear Filtros =====
@@ -626,6 +754,7 @@ function resetFilters() {
     selectedTecnicos.clear();
     selectedCDAs.clear();
     selectedTipos.clear();
+    selectedMantenimiento.clear();
 
     // Desmarcar checkboxes
     document.querySelectorAll('.filter-item input[type="checkbox"]').forEach(checkbox => {
@@ -665,10 +794,10 @@ function handleGlobalSearch(searchTerm) {
 
     const resultsContainer = document.getElementById('search-results');
     const navigationContainer = document.getElementById('search-navigation');
-    console.log('📦 Contenedor de resultados:', resultsContainer);
+    console.log(' Contenedor de resultados:', resultsContainer);
 
     const term = searchTerm.trim().toLowerCase();
-    console.log('📝 Término de búsqueda procesado:', term, 'Longitud:', term.length);
+    console.log(' Término de búsqueda procesado:', term, 'Longitud:', term.length);
 
     // Limpiar si el término está vacío
     if (term.length < 2) {
@@ -683,11 +812,13 @@ function handleGlobalSearch(searchTerm) {
     console.log('🔎 Buscando en', allPuntos.length, 'puntos...');
 
     // Buscar en todos los puntos (sin límite)
-    searchResults = allPuntos.filter(punto => {
-        const nombre = String(punto.NOMBREPV || '').toLowerCase();
-        const codigo = String(punto.CODIGOPV || '').toLowerCase();
+    const normalizedTerm = normalizeString(term);
 
-        return nombre.includes(term) || codigo.includes(term);
+    searchResults = allPuntos.filter(punto => {
+        const nombre = normalizeString(punto.NOMBREPV || '');
+        const codigo = normalizeString(punto.CODIGOPV || '');
+
+        return nombre.includes(normalizedTerm) || codigo.includes(normalizedTerm);
     });
 
     console.log(`✅ ${searchResults.length} resultados encontrados`);
@@ -825,10 +956,10 @@ function nextSearchResult() {
 function filterSearchList(searchTerm, listId) {
     const list = document.getElementById(listId);
     const items = list.querySelectorAll('.filter-item');
-    const term = searchTerm.toLowerCase().trim();
+    const term = normalizeString(searchTerm);
 
     items.forEach(item => {
-        const label = item.querySelector('label').textContent.toLowerCase();
+        const label = normalizeString(item.querySelector('label').textContent);
         if (label.includes(term)) {
             item.classList.remove('hidden');
         } else {
@@ -927,15 +1058,422 @@ function formatNumber(num) {
     return num.toLocaleString('es-CO');
 }
 
+/**
+ * Normaliza un string: lo pasa a minúsculas, elimina espacios extra y quita acentos.
+ * @param {string} str - El string a normalizar
+ * @returns {string} - El string normalizado
+ */
+function normalizeString(str) {
+    if (!str) return '';
+    return String(str)
+        .toLowerCase()
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, ""); // Elimina marcas de acento
+}
+
 function hideLoader() {
     const loader = document.getElementById('loader');
     loader.classList.add('hidden');
+}
+
+// ===== Sistema de Mantenimiento Preventivo =====
+// Variables globales para mantenimiento
+let selectedMantenimiento = new Set(); // Para filtros de mantenimiento
+let mantenimientoData = {}; // Almacena datos de mantenimiento
+let currentEditingPunto = null; // Punto que se está editando
+
+// Cargar datos de mantenimiento desde el servidor (API REST → SQLite)
+async function loadMantenimientoData() {
+    try {
+        console.log('⌛ Cargando mantenimientos desde el servidor...');
+        const respuesta = await fetch('/api/mantenimientos');
+        if (respuesta.ok) {
+            mantenimientoData = await respuesta.json();
+            console.log('✅ Datos de mantenimiento cargados desde el servidor:', Object.keys(mantenimientoData).length, 'puntos');
+        } else {
+            console.error('❌ Error al cargar mantenimientos del servidor:', respuesta.status);
+            mantenimientoData = {};
+        }
+    } catch (error) {
+        console.error('Error al cargar datos de mantenimiento:', error);
+        mantenimientoData = {};
+    }
+}
+
+// Guardar un mantenimiento individual en el servidor (API REST → SQLite)
+async function guardarMantenimientoEnServidor(codigoPV, datos) {
+    try {
+        const respuesta = await fetch('/api/mantenimientos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                codigoPV: codigoPV,
+                realizado: datos.realizado,
+                numeroTicket: datos.numeroTicket || '',
+                fechaMantenimiento: datos.fechaMantenimiento || ''
+            })
+        });
+
+        if (respuesta.ok) {
+            console.log('☁️ Mantenimiento guardado en servidor:', codigoPV);
+        } else {
+            console.error('❌ Error al guardar en servidor:', respuesta.status);
+        }
+    } catch (error) {
+        console.error('❌ Error de conexión al servidor:', error);
+    }
+}
+
+// Obtener datos de mantenimiento de un punto
+function getPuntoMantenimiento(codigoPV) {
+    return mantenimientoData[codigoPV] || {
+        realizado: false,
+        numeroTicket: '',
+        fechaMantenimiento: ''
+    };
+}
+
+// Actualizar datos de mantenimiento de un punto y guardar en el servidor
+function updatePuntoMantenimiento(codigoPV, data) {
+    const datosMantenimiento = {
+        realizado: data.realizado,
+        numeroTicket: data.numeroTicket || '',
+        fechaMantenimiento: data.fechaMantenimiento || ''
+    };
+    // Actualizar la caché local en memoria
+    mantenimientoData[codigoPV] = datosMantenimiento;
+    // Persistir en el servidor vía API REST (SQLite)
+    guardarMantenimientoEnServidor(codigoPV, datosMantenimiento);
+    console.log(`✓ Mantenimiento actualizado para punto ${codigoPV}`);
+}
+
+// Abrir modal de mantenimiento
+function openMantenimientoModal(punto) {
+    currentEditingPunto = punto;
+    const modal = document.getElementById('modal-mantenimiento');
+    const mantenimiento = getPuntoMantenimiento(punto.CODIGOPV);
+
+    // Llenar información del punto
+    document.getElementById('modal-punto-nombre').textContent = punto.NOMBREPV || 'Sin nombre';
+    document.getElementById('modal-punto-codigo').textContent = punto.CODIGOPV || 'N/A';
+
+    // Llenar datos de mantenimiento
+    const checkboxRealizado = document.getElementById('modal-mantenimiento-realizado');
+    const inputTicket = document.getElementById('modal-numero-ticket');
+    const inputFecha = document.getElementById('modal-fecha-mantenimiento');
+    const ticketGroup = document.getElementById('ticket-group');
+    const fechaGroup = document.getElementById('fecha-group');
+
+    checkboxRealizado.checked = mantenimiento.realizado;
+    inputTicket.value = mantenimiento.numeroTicket || '';
+    inputFecha.value = mantenimiento.fechaMantenimiento || '';
+
+    // Mostrar/ocultar campos según el estado del checkbox
+    if (mantenimiento.realizado) {
+        ticketGroup.style.display = 'block';
+        fechaGroup.style.display = 'block';
+    } else {
+        ticketGroup.style.display = 'none';
+        fechaGroup.style.display = 'none';
+    }
+
+    // Mostrar modal con animación
+    modal.classList.add('show');
+
+    // Auto-focus en el input de ticket si está activado
+    if (mantenimiento.realizado) {
+        setTimeout(() => inputTicket.focus(), 300);
+    }
+}
+
+// Cerrar modal de mantenimiento
+function closeMantenimientoModal() {
+    const modal = document.getElementById('modal-mantenimiento');
+    modal.classList.remove('show');
+    currentEditingPunto = null;
+}
+
+// Guardar mantenimiento
+function guardarMantenimiento() {
+    if (!currentEditingPunto) return;
+
+    const checkboxRealizado = document.getElementById('modal-mantenimiento-realizado');
+    const inputTicket = document.getElementById('modal-numero-ticket');
+    const inputFecha = document.getElementById('modal-fecha-mantenimiento');
+
+    const realizado = checkboxRealizado.checked;
+    const numeroTicket = inputTicket.value.trim();
+    const fechaMantenimiento = inputFecha.value;
+
+    // Validar: si está realizado, debe tener número de ticket y fecha
+    if (realizado && (!numeroTicket || !fechaMantenimiento)) {
+        alert('Por favor, ingresa el número de ticket y la fecha de mantenimiento');
+        return;
+    }
+
+    // Actualizar datos
+    updatePuntoMantenimiento(currentEditingPunto.CODIGOPV, {
+        realizado,
+        numeroTicket,
+        fechaMantenimiento
+    });
+
+    // Cerrar modal
+    closeMantenimientoModal();
+
+    // Actualizar visualización
+    renderMarkers();
+    renderMantenimientoFilter();
+
+    console.log('✓ Mantenimiento guardado exitosamente');
+}
+
+// Renderizar filtro de mantenimiento
+function renderMantenimientoFilter() {
+    const container = document.getElementById('mantenimiento-list');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    // Contar puntos con y sin mantenimiento
+    let conMantenimiento = 0;
+    let sinMantenimiento = 0;
+
+    allPuntos.forEach(punto => {
+        const mantenimiento = getPuntoMantenimiento(punto.CODIGOPV);
+        if (mantenimiento.realizado) {
+            conMantenimiento++;
+        } else {
+            sinMantenimiento++;
+        }
+    });
+
+    // Crear opciones de filtro con el valor correcto como identificador
+    const opciones = [
+        { value: 'con-mantenimiento', label: 'Con Mantenimiento', count: conMantenimiento },
+        { value: 'sin-mantenimiento', label: 'Sin Mantenimiento', count: sinMantenimiento }
+    ];
+
+    opciones.forEach(opcion => {
+        // Crear el item del filtro usando el valor real, no el label
+        const item = createMantenimientoFilterItem(opcion.value, opcion.label, opcion.count);
+        container.appendChild(item);
+    });
+
+    document.getElementById('mantenimiento-count').textContent = '2';
+}
+
+// Crear item de filtro específico para mantenimiento (usa value como identificador)
+function createMantenimientoFilterItem(value, label, count) {
+    const div = document.createElement('div');
+    div.className = 'filter-item';
+    div.dataset.value = value;
+    div.dataset.type = 'mantenimiento';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = `mantenimiento-${value}`;
+    // Usar el value correcto (con-mantenimiento/sin-mantenimiento) en el evento
+    checkbox.addEventListener('change', (e) => handleFilterChange('mantenimiento', value, e.target.checked));
+
+    const labelEl = document.createElement('label');
+    labelEl.htmlFor = checkbox.id;
+    labelEl.textContent = label;
+
+    const countSpan = document.createElement('span');
+    countSpan.className = 'count';
+    countSpan.textContent = count;
+
+    div.appendChild(checkbox);
+    div.appendChild(labelEl);
+    div.appendChild(countSpan);
+
+    return div;
+}
+
+// Configurar event listeners del modal
+function setupMantenimientoModalListeners() {
+    const modal = document.getElementById('modal-mantenimiento');
+    const btnClose = document.getElementById('btn-close-modal');
+    const btnCancelar = document.getElementById('btn-cancelar-modal');
+    const btnGuardar = document.getElementById('btn-guardar-mantenimiento');
+    const checkboxRealizado = document.getElementById('modal-mantenimiento-realizado');
+
+    // Cerrar modal
+    btnClose.addEventListener('click', closeMantenimientoModal);
+    btnCancelar.addEventListener('click', closeMantenimientoModal);
+
+    // Cerrar al hacer clic fuera del contenido
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeMantenimientoModal();
+        }
+    });
+
+    // Guardar
+    btnGuardar.addEventListener('click', guardarMantenimiento);
+
+    // Mostrar/ocultar campos según el checkbox
+    checkboxRealizado.addEventListener('change', (e) => {
+        const ticketGroup = document.getElementById('ticket-group');
+        const fechaGroup = document.getElementById('fecha-group');
+        const inputTicket = document.getElementById('modal-numero-ticket');
+
+        if (e.target.checked) {
+            ticketGroup.style.display = 'block';
+            fechaGroup.style.display = 'block';
+            setTimeout(() => inputTicket.focus(), 100);
+        } else {
+            ticketGroup.style.display = 'none';
+            fechaGroup.style.display = 'none';
+        }
+    });
+
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            closeMantenimientoModal();
+        }
+    });
+
+    console.log('✓ Event listeners del modal configurados');
+}
+
+
+
+// Función para exportar mantenimientos a Excel (.xlsx)
+function exportarMantenimientos() {
+    // 1. Obtener puntos con mantenimiento realizado
+    const puntosConMantenimiento = allPuntos.filter(punto => {
+        const mant = getPuntoMantenimiento(punto.CODIGOPV);
+        return mant && mant.realizado;
+    });
+
+    if (puntosConMantenimiento.length === 0) {
+        alert('No hay puntos con mantenimiento realizado para exportar.');
+        return;
+    }
+
+    // 2. Definir centros de costo de Valledupar
+    const centrosValledupar = [
+        'VALLEDUPAR AMBULANTE',
+        'VALLEDUPAR AV LOS MILITARES',
+        'VALLEDUPAR BELLA VISTA',
+        'VALLEDUPAR FUNDADORES',
+        'VALLEDUPAR LA CANDELARIA',
+        'VALLEDUPAR LA CUARTA',
+        'VALLEDUPAR LANEVADA',
+        'VALLEDUPAR LOPERENA',
+        'VALLEDUPAR ORBICENTRO',
+        'VALLEDUPAR PEDIATRICO',
+        'VALLEDUPAR PRINCIPAL',
+        'VALLEDUPAR SIERRA NEVADA',
+        'VALLEDUPAR SIMON BOLIVAR 7D',
+        'VALLEDUPAR TERMINAL',
+        'VALLEDUPAR TERMINAL 2'
+    ];
+
+    // 3. Preparar los datos para el Excel
+    const data = puntosConMantenimiento.map(punto => {
+        const mant = getPuntoMantenimiento(punto.CODIGOPV);
+        // Determinar municipio
+        const cda = (punto['NOMBRE DE CENTRO DE COSTO'] || 'SIN ESPECIFICAR').trim().toUpperCase();
+        let municipio = cda;
+
+        // Regla para Valledupar
+        if (centrosValledupar.some(c => cda.includes(c))) {
+            municipio = 'VALLEDUPAR';
+        }
+        // Regla para Bosconia
+        else if (cda.includes('BOSCONIA')) {
+            municipio = 'BOSCONIA';
+        }
+
+        return {
+            'Código PV': punto.CODIGOPV || '',
+            'Nombre Punto': punto.NOMBREPV || '',
+            'Dirección': punto['DIRECCION PDV'] || '',
+            'Centro de Costo': punto['NOMBRE DE CENTRO DE COSTO'] || '',
+            'Municipio': municipio,
+            'Técnico Asignado': punto['TECNICO  ASIGNADO '] || '',
+            'Número de Ticket': mant.numeroTicket || '',
+            'Fecha Mantenimiento': mant.fechaMantenimiento || ''
+        };
+    });
+
+    // 4. Crear el libro y la hoja con SheetJS
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Mantenimientos");
+
+    // Ajustar el ancho de las columnas automáticamente (opcional pero recomendado)
+    const wscols = [
+        { wch: 15 }, // Código PV
+        { wch: 35 }, // Nombre Punto
+        { wch: 40 }, // Dirección
+        { wch: 35 }, // Centro de Costo
+        { wch: 15 }, // Municipio
+        { wch: 25 }, // Técnico Asignado
+        { wch: 20 }, // Número de Ticket
+        { wch: 18 }  // Fecha Mantenimiento
+    ];
+    worksheet['!cols'] = wscols;
+
+    // 5. Generar archivo y descargar
+    const fechaActual = new Date().toISOString().split('T')[0];
+    const nombreArchivo = `reporte_mantenimientos_${fechaActual}.xlsx`;
+
+    XLSX.writeFile(workbook, nombreArchivo);
+
+    console.log(`✅ Reporte Excel exportado con ${puntosConMantenimiento.length} mantenimientos.`);
+}
+
+// ===== Compartir Ubicación =====
+function compartirUbicacion(lat, lng, nombre) {
+    const enlace = `https://www.google.com/maps?q=${lat},${lng}`;
+
+    navigator.clipboard.writeText(enlace).then(() => {
+        mostrarToastCompartir(`Enlace copiado${nombre ? ': ' + nombre : ''}`);
+    }).catch(() => {
+        // Fallback para navegadores sin soporte de clipboard API
+        const textarea = document.createElement('textarea');
+        textarea.value = enlace;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        mostrarToastCompartir(` Enlace copiado${nombre ? ': ' + nombre : ''}`);
+    });
+}
+
+function mostrarToastCompartir(mensaje) {
+    // Eliminar toast anterior si existe
+    const toastExistente = document.getElementById('toast-compartir');
+    if (toastExistente) toastExistente.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'toast-compartir';
+    toast.className = 'toast-compartir';
+    toast.innerHTML = `<i class="fas fa-check-circle"></i> ${mensaje}`;
+    document.body.appendChild(toast);
+
+    // Trigger animación de entrada
+    setTimeout(() => toast.classList.add('visible'), 10);
+
+    // Ocultar y eliminar después de 2.5 segundos
+    setTimeout(() => {
+        toast.classList.remove('visible');
+        setTimeout(() => toast.remove(), 400);
+    }, 2500);
 }
 
 // ===== Mensaje de Bienvenida =====
 console.log(`
 ╔═══════════════════════════════════════╗
 ║   Mapa Interactivo - Puntos Cesar     ║
-║   © 2026 - Versión 1.0                ║
+║   © 2026 - Versión 1.1                ║
 ╚═══════════════════════════════════════╝
 `);
