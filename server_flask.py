@@ -8,7 +8,13 @@ import os
 import json
 import sqlite3
 from flask import Flask, request, jsonify, send_from_directory
+import sys
 from datetime import datetime
+
+def print_flush(*args, **kwargs):
+    """Printea y limpia el buffer de salida inmediatamente."""
+    print(*args, **kwargs)
+    sys.stdout.flush()
 
 # ===== Configuración =====
 DIRECTORIO_APP = os.path.dirname(os.path.abspath(__file__))
@@ -27,9 +33,9 @@ app = Flask(__name__, static_folder=DIRECTORIO_APP)
 
 def inicializar_entorno():
     """Asegura que el directorio de datos existe y la base de datos está lista."""
-    print('=' * 70)
-    print('   📍 Iniciando Servidor Flask - Mapa Interactivo de Puntos del Cesar')
-    print('=' * 70)
+    print_flush('=' * 70)
+    print_flush('   📍 Iniciando Servidor Flask - Mapa Interactivo de Puntos del Cesar')
+    print_flush('=' * 70)
     
     # Asegurar que el directorio de datos existe
     if not os.path.exists(DIRECTORIO_DATOS):
@@ -44,7 +50,7 @@ def inicializar_entorno():
     
     # Inicializar la base de datos
     inicializar_bd()
-    print('=' * 70)
+    print_flush('=' * 70)
 
 # Se ejecutará al final del archivo
 
@@ -80,7 +86,7 @@ def inicializar_bd():
     total = cursor.fetchone()['total']
 
     if total == 0 and os.path.exists(RUTA_RESPALDO):
-        print(f'⌛ BD vacía, importando respaldo desde {RUTA_RESPALDO}...')
+        print_flush(f'⌛ BD vacía, importando respaldo desde {RUTA_RESPALDO}...')
         try:
             with open(RUTA_RESPALDO, 'r', encoding='utf-8') as archivo:
                 datos_respaldo = json.load(archivo)
@@ -101,7 +107,7 @@ def inicializar_bd():
                 contador += 1
 
             conexion.commit()
-            print(f'✅ {contador} mantenimientos importados desde el respaldo JSON')
+            print_flush(f'✅ {contador} mantenimientos importados desde el respaldo JSON')
         except Exception as error:
             print(f'❌ Error al importar respaldo: {error}')
     elif total > 0:
@@ -214,5 +220,9 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=PUERTO, debug=False)
 
 # ===== Ejecución Inicial =====
+
 # Se ejecuta al cargar el módulo para asegurar que la BD está lista en Render/Gunicorn
-inicializar_entorno()
+# Usamos un flag para evitar múltiples inicializaciones si se importa varias veces
+if not os.environ.get('APP_INITIALIZED'):
+    inicializar_entorno()
+    os.environ['APP_INITIALIZED'] = 'true'
