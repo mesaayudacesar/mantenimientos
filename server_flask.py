@@ -23,6 +23,32 @@ RUTA_RESPALDO = os.path.join(DIRECTORIO_APP, 'respaldo_mantenimientos.json')
 app = Flask(__name__, static_folder=DIRECTORIO_APP)
 
 
+# ===== Inicialización de datos =====
+
+def inicializar_entorno():
+    """Asegura que el directorio de datos existe y la base de datos está lista."""
+    print('=' * 70)
+    print('   📍 Iniciando Servidor Flask - Mapa Interactivo de Puntos del Cesar')
+    print('=' * 70)
+    
+    # Asegurar que el directorio de datos existe
+    if not os.path.exists(DIRECTORIO_DATOS):
+        try:
+            os.makedirs(DIRECTORIO_DATOS, exist_ok=True)
+            print(f'📁 Directorio de datos creado: {DIRECTORIO_DATOS}')
+        except Exception as e:
+            print(f'❌ Error creando directorio {DIRECTORIO_DATOS}: {e}')
+    
+    print(f'   💾 BD SQLite: {RUTA_BD}')
+    print(f'   📁 Respaldo: {RUTA_RESPALDO}')
+    
+    # Inicializar la base de datos
+    inicializar_bd()
+    print('=' * 70)
+
+# Se ejecutará al final del archivo
+
+
 # ===== Base de Datos =====
 
 def obtener_conexion():
@@ -176,25 +202,17 @@ def actualizar_respaldo_json():
 
         with open(RUTA_RESPALDO, 'w', encoding='utf-8') as archivo:
             json.dump(datos, archivo, ensure_ascii=False)
+        print(f'✅ Respaldo JSON actualizado ({len(datos)} registros)')
     except Exception as error:
         print(f'⚠️ No se pudo actualizar el respaldo JSON: {error}')
 
 
-# ===== Inicio =====
-
 if __name__ == '__main__':
-    print('=' * 70)
-    print('   📍 Servidor Flask - Mapa Interactivo de Puntos del Cesar')
-    print('=' * 70)
-    print(f'   🔌 Puerto: {PUERTO}')
-    print(f'   📁 App: {DIRECTORIO_APP}')
-    print(f'   💾 BD SQLite: {RUTA_BD}')
-    print('=' * 70)
-
-    # Inicializar la base de datos
-    inicializar_bd()
-
-    print(f'\n✅ Servidor iniciado en http://localhost:{PUERTO}')
+    print(f'\n🚀 Modo desarrollo: iniciado en http://localhost:{PUERTO}')
     print('   Presiona Ctrl+C para detener\n')
 
     app.run(host='0.0.0.0', port=PUERTO, debug=False)
+
+# ===== Ejecución Inicial =====
+# Se ejecuta al cargar el módulo para asegurar que la BD está lista en Render/Gunicorn
+inicializar_entorno()

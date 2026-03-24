@@ -1090,9 +1090,14 @@ async function loadMantenimientoData() {
         const respuesta = await fetch('/api/mantenimientos');
         if (respuesta.ok) {
             mantenimientoData = await respuesta.json();
-            console.log('✅ Datos de mantenimiento cargados desde el servidor:', Object.keys(mantenimientoData).length, 'puntos');
+            const count = Object.keys(mantenimientoData).length;
+            console.log('✅ Datos de mantenimiento cargados:', count, 'puntos');
+            if (count === 0) {
+                console.warn('⚠️ No se recibieron registros de mantenimiento del servidor.');
+            }
         } else {
-            console.error('❌ Error al cargar mantenimientos del servidor:', respuesta.status);
+            const errorText = await respuesta.text();
+            console.error('❌ Error al cargar mantenimientos:', respuesta.status, errorText);
             mantenimientoData = {};
         }
     } catch (error) {
@@ -1127,7 +1132,11 @@ async function guardarMantenimientoEnServidor(codigoPV, datos) {
 
 // Obtener datos de mantenimiento de un punto
 function getPuntoMantenimiento(codigoPV) {
-    return mantenimientoData[codigoPV] || {
+    if (!codigoPV) return { realizado: false, numeroTicket: '', fechaMantenimiento: '' };
+    
+    // Normalizar a string para asegurar coincidencia con las llaves del JSON
+    const id = String(codigoPV);
+    return mantenimientoData[id] || {
         realizado: false,
         numeroTicket: '',
         fechaMantenimiento: ''
