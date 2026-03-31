@@ -600,7 +600,7 @@ function createPopupContent(punto) {
         </div>
         <div style="margin-top: 8px; font-size: 0.75rem; color: var(--text-secondary);">
             <div><strong>Ticket:</strong> ${mantenimiento.numeroTicket}</div>
-            <div><strong>Fecha:</strong> ${new Date(mantenimiento.fechaMantenimiento).toLocaleDateString('es-CO')}</div>
+            <div><strong>Fecha:</strong> ${new Date(mantenimiento.fechaMantenimiento + 'T00:00:00').toLocaleDateString('es-CO')}</div>
         </div>
     ` : `
         <div class="maintenance-status pending">
@@ -1405,7 +1405,7 @@ function exportarMantenimientos() {
             'Dirección': punto['DIRECCION PDV'] || '',
             'Centro de Costo': punto['NOMBRE DE CENTRO DE COSTO'] || '',
             'Municipio': municipio,
-            'Técnico Asignado': punto['TECNICO  ASIGNADO '] || '',
+            'Técnico Asignado': punto['TECNICO ASIGNADO'] || '',
             'Número de Ticket': mant.numeroTicket || '',
             'Fecha Mantenimiento': mant.fechaMantenimiento || ''
         };
