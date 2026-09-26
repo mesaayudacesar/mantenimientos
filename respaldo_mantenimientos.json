@@ -46,8 +46,8 @@
   },
   "9180": {
     "realizado": true,
-    "numeroTicket": "6490966",
-    "fechaMantenimiento": "2026-08-11"
+    "numeroTicket": "6569047",
+    "fechaMantenimiento": "2026-09-14"
   },
   "7233": {
     "realizado": true,
@@ -1056,8 +1056,8 @@
   },
   "43817": {
     "realizado": true,
-    "numeroTicket": "6515709",
-    "fechaMantenimiento": "2026-08-24"
+    "numeroTicket": "6576803",
+    "fechaMantenimiento": "2026-09-17"
   },
   "43819": {
     "realizado": true,
@@ -1408,5 +1408,1225 @@
     "realizado": true,
     "numeroTicket": "6524435",
     "fechaMantenimiento": "2026-08-28"
+  },
+  "7236": {
+    "realizado": true,
+    "numeroTicket": "6521904",
+    "fechaMantenimiento": "2026-08-27"
+  },
+  "7106": {
+    "realizado": true,
+    "numeroTicket": "6552974",
+    "fechaMantenimiento": "2026-09-08"
+  },
+  "7175": {
+    "realizado": true,
+    "numeroTicket": "6592104",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "7098": {
+    "realizado": true,
+    "numeroTicket": "6592118",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "7034": {
+    "realizado": true,
+    "numeroTicket": "6586485",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "7074": {
+    "realizado": true,
+    "numeroTicket": "6583285",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "7058": {
+    "realizado": true,
+    "numeroTicket": "6571495",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "7078": {
+    "realizado": true,
+    "numeroTicket": "6573815",
+    "fechaMantenimiento": "2026-09-16"
+  },
+  "17930": {
+    "realizado": true,
+    "numeroTicket": "6549039",
+    "fechaMantenimiento": "2026-09-07"
+  },
+  "8359": {
+    "realizado": true,
+    "numeroTicket": "6539871",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "8119": {
+    "realizado": true,
+    "numeroTicket": "6589675",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "8079": {
+    "realizado": true,
+    "numeroTicket": "6589593",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "7200": {
+    "realizado": true,
+    "numeroTicket": "6529704",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "8098": {
+    "realizado": true,
+    "numeroTicket": "6589650",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "9190": {
+    "realizado": true,
+    "numeroTicket": "6549056",
+    "fechaMantenimiento": "2026-09-07"
+  },
+  "8358": {
+    "realizado": true,
+    "numeroTicket": "6529992",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "8373": {
+    "realizado": true,
+    "numeroTicket": "6592133",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "7177": {
+    "realizado": true,
+    "numeroTicket": "6583303",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "16821": {
+    "realizado": true,
+    "numeroTicket": "6594923",
+    "fechaMantenimiento": "2026-09-25"
+  },
+  "9037": {
+    "realizado": true,
+    "numeroTicket": "6578991",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "8376": {
+    "realizado": true,
+    "numeroTicket": "6538317",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "8450": {
+    "realizado": true,
+    "numeroTicket": "6549057",
+    "fechaMantenimiento": "2026-09-07"
+  },
+  "7243": {
+    "realizado": true,
+    "numeroTicket": "6592244",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "8289": {
+    "realizado": true,
+    "numeroTicket": "6583304",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "7129": {
+    "realizado": true,
+    "numeroTicket": "6579137",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "7124": {
+    "realizado": true,
+    "numeroTicket": "6576828",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "7151": {
+    "realizado": true,
+    "numeroTicket": "6571461",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "18211": {
+    "realizado": true,
+    "numeroTicket": "6586610",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "7066": {
+    "realizado": true,
+    "numeroTicket": "6592079",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "17373": {
+    "realizado": true,
+    "numeroTicket": "6573743",
+    "fechaMantenimiento": "2026-09-16"
+  },
+  "44807": {
+    "realizado": true,
+    "numeroTicket": "6557295",
+    "fechaMantenimiento": "2026-09-09"
+  },
+  "9120": {
+    "realizado": true,
+    "numeroTicket": "6592189",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "9205": {
+    "realizado": true,
+    "numeroTicket": "6529786",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "16807": {
+    "realizado": true,
+    "numeroTicket": "6579145",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "9172": {
+    "realizado": true,
+    "numeroTicket": "6529824",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "9156": {
+    "realizado": true,
+    "numeroTicket": "6571467",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "9080": {
+    "realizado": true,
+    "numeroTicket": "6529787",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "8262": {
+    "realizado": true,
+    "numeroTicket": "6571948",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "9189": {
+    "realizado": true,
+    "numeroTicket": "6586563",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "13506": {
+    "realizado": true,
+    "numeroTicket": "6577402",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "13504": {
+    "realizado": true,
+    "numeroTicket": "6595049",
+    "fechaMantenimiento": "2026-09-25"
+  },
+  "16900": {
+    "realizado": true,
+    "numeroTicket": "6573818",
+    "fechaMantenimiento": "2026-09-16"
+  },
+  "17015": {
+    "realizado": true,
+    "numeroTicket": "6578920",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "17076": {
+    "realizado": true,
+    "numeroTicket": "6568264",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "17227": {
+    "realizado": true,
+    "numeroTicket": "6576831",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "17743": {
+    "realizado": true,
+    "numeroTicket": "6592136",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "8260": {
+    "realizado": true,
+    "numeroTicket": "6541816",
+    "fechaMantenimiento": "2026-09-04"
+  },
+  "17717": {
+    "realizado": true,
+    "numeroTicket": "6595044",
+    "fechaMantenimiento": "2026-09-25"
+  },
+  "17063": {
+    "realizado": true,
+    "numeroTicket": "6568412",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "17018": {
+    "realizado": true,
+    "numeroTicket": "6568282",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "17088": {
+    "realizado": true,
+    "numeroTicket": "6538238",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "8188": {
+    "realizado": true,
+    "numeroTicket": "6580154",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "7152": {
+    "realizado": true,
+    "numeroTicket": "6549088",
+    "fechaMantenimiento": "2026-09-07"
+  },
+  "7082": {
+    "realizado": true,
+    "numeroTicket": "6541809",
+    "fechaMantenimiento": "2026-09-04"
+  },
+  "17867": {
+    "realizado": true,
+    "numeroTicket": "6577399",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "18208": {
+    "realizado": true,
+    "numeroTicket": "6529768",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "18453": {
+    "realizado": true,
+    "numeroTicket": "6538246",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "18593": {
+    "realizado": true,
+    "numeroTicket": "6527758",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "16809": {
+    "realizado": true,
+    "numeroTicket": "6529796",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "19107": {
+    "realizado": true,
+    "numeroTicket": "6538409",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "20092": {
+    "realizado": true,
+    "numeroTicket": "6528159",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "20187": {
+    "realizado": true,
+    "numeroTicket": "6529827",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "20298": {
+    "realizado": true,
+    "numeroTicket": "6576781",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "20022": {
+    "realizado": true,
+    "numeroTicket": "6571476",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "20282": {
+    "realizado": true,
+    "numeroTicket": "6527854",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "20342": {
+    "realizado": true,
+    "numeroTicket": "6571934",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "21887": {
+    "realizado": true,
+    "numeroTicket": "6538354",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "23795": {
+    "realizado": true,
+    "numeroTicket": "6576826",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "21891": {
+    "realizado": true,
+    "numeroTicket": "6579020",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "24057": {
+    "realizado": true,
+    "numeroTicket": "6571496",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "23996": {
+    "realizado": true,
+    "numeroTicket": "6527756",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "39800": {
+    "realizado": true,
+    "numeroTicket": "6571486",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "39826": {
+    "realizado": true,
+    "numeroTicket": "6577371",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "40033": {
+    "realizado": true,
+    "numeroTicket": "6573928",
+    "fechaMantenimiento": "2026-09-16"
+  },
+  "40098": {
+    "realizado": true,
+    "numeroTicket": "6581157",
+    "fechaMantenimiento": "2026-09-19"
+  },
+  "40095": {
+    "realizado": true,
+    "numeroTicket": "6541788",
+    "fechaMantenimiento": "2026-09-04"
+  },
+  "40329": {
+    "realizado": true,
+    "numeroTicket": "6577396",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "40490": {
+    "realizado": true,
+    "numeroTicket": "6549096",
+    "fechaMantenimiento": "2026-09-07"
+  },
+  "40355": {
+    "realizado": true,
+    "numeroTicket": "6568260",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "40354": {
+    "realizado": true,
+    "numeroTicket": "6571487",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "40614": {
+    "realizado": true,
+    "numeroTicket": "6527517",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "40544": {
+    "realizado": true,
+    "numeroTicket": "6562453",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "40755": {
+    "realizado": true,
+    "numeroTicket": "6527504",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "40621": {
+    "realizado": true,
+    "numeroTicket": "6528273",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "40586": {
+    "realizado": true,
+    "numeroTicket": "6592082",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "40600": {
+    "realizado": true,
+    "numeroTicket": "6562468",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "40734": {
+    "realizado": true,
+    "numeroTicket": "6527718",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "40950": {
+    "realizado": true,
+    "numeroTicket": "6576765",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "41055": {
+    "realizado": true,
+    "numeroTicket": "6552982",
+    "fechaMantenimiento": "2026-09-08"
+  },
+  "41051": {
+    "realizado": true,
+    "numeroTicket": "6590594",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "41132": {
+    "realizado": true,
+    "numeroTicket": "6586566",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "41101": {
+    "realizado": true,
+    "numeroTicket": "6586577",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "42377": {
+    "realizado": true,
+    "numeroTicket": "6576786",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "41127": {
+    "realizado": true,
+    "numeroTicket": "6573819",
+    "fechaMantenimiento": "2026-09-16"
+  },
+  "41088": {
+    "realizado": true,
+    "numeroTicket": "6532154",
+    "fechaMantenimiento": "2026-09-02"
+  },
+  "42503": {
+    "realizado": true,
+    "numeroTicket": "6589714",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "42495": {
+    "realizado": true,
+    "numeroTicket": "6576788",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "42506": {
+    "realizado": true,
+    "numeroTicket": "6532983",
+    "fechaMantenimiento": "2026-09-02"
+  },
+  "42533": {
+    "realizado": true,
+    "numeroTicket": "6568480",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "42394": {
+    "realizado": true,
+    "numeroTicket": "6592080",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "42515": {
+    "realizado": true,
+    "numeroTicket": "6549046",
+    "fechaMantenimiento": "2026-09-07"
+  },
+  "42521": {
+    "realizado": true,
+    "numeroTicket": "6589648",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "42480": {
+    "realizado": true,
+    "numeroTicket": "6583312",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "43355": {
+    "realizado": true,
+    "numeroTicket": "6532161",
+    "fechaMantenimiento": "2026-09-02"
+  },
+  "42440": {
+    "realizado": true,
+    "numeroTicket": "6583152",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "43411": {
+    "realizado": true,
+    "numeroTicket": "6576790",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "43378": {
+    "realizado": true,
+    "numeroTicket": "6592150",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "43613": {
+    "realizado": true,
+    "numeroTicket": "6586674",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "43778": {
+    "realizado": true,
+    "numeroTicket": "6589715",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "43830": {
+    "realizado": true,
+    "numeroTicket": "6589652",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "43562": {
+    "realizado": true,
+    "numeroTicket": "6584037",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "43899": {
+    "realizado": true,
+    "numeroTicket": "6549045",
+    "fechaMantenimiento": "2026-09-07"
+  },
+  "44438": {
+    "realizado": true,
+    "numeroTicket": "6583322",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "44447": {
+    "realizado": true,
+    "numeroTicket": "6549089",
+    "fechaMantenimiento": "2026-09-07"
+  },
+  "44556": {
+    "realizado": true,
+    "numeroTicket": "6568430",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "44530": {
+    "realizado": true,
+    "numeroTicket": "6583321",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "44775": {
+    "realizado": true,
+    "numeroTicket": "6584170",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "44681": {
+    "realizado": true,
+    "numeroTicket": "6592116",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "44724": {
+    "realizado": true,
+    "numeroTicket": "6562461",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "44776": {
+    "realizado": true,
+    "numeroTicket": "6576799",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "44909": {
+    "realizado": true,
+    "numeroTicket": "6579011",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "44874": {
+    "realizado": true,
+    "numeroTicket": "6576813",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "44870": {
+    "realizado": true,
+    "numeroTicket": "6557774",
+    "fechaMantenimiento": "2026-09-09"
+  },
+  "44906": {
+    "realizado": true,
+    "numeroTicket": "6538319",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "44921": {
+    "realizado": true,
+    "numeroTicket": "6571475",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "44910": {
+    "realizado": true,
+    "numeroTicket": "6573924",
+    "fechaMantenimiento": "2026-09-16"
+  },
+  "45205": {
+    "realizado": true,
+    "numeroTicket": "6556777",
+    "fechaMantenimiento": "2026-09-09"
+  },
+  "45146": {
+    "realizado": true,
+    "numeroTicket": "6571388",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "45212": {
+    "realizado": true,
+    "numeroTicket": "6527512",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "45155": {
+    "realizado": true,
+    "numeroTicket": "6529769",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "45171": {
+    "realizado": true,
+    "numeroTicket": "6592087",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "45321": {
+    "realizado": true,
+    "numeroTicket": "6538226",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "45331": {
+    "realizado": true,
+    "numeroTicket": "6562731",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "45409": {
+    "realizado": true,
+    "numeroTicket": "6586491",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "45337": {
+    "realizado": true,
+    "numeroTicket": "6562730",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "45367": {
+    "realizado": true,
+    "numeroTicket": "6538408",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "46176": {
+    "realizado": true,
+    "numeroTicket": "6592107",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "46208": {
+    "realizado": true,
+    "numeroTicket": "6549052",
+    "fechaMantenimiento": "2026-09-07"
+  },
+  "45778": {
+    "realizado": true,
+    "numeroTicket": "6578963",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "45424": {
+    "realizado": true,
+    "numeroTicket": "6538410",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "46282": {
+    "realizado": true,
+    "numeroTicket": "6592247",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "46271": {
+    "realizado": true,
+    "numeroTicket": "6593050",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "46210": {
+    "realizado": true,
+    "numeroTicket": "6542128",
+    "fechaMantenimiento": "2026-09-04"
+  },
+  "45389": {
+    "realizado": true,
+    "numeroTicket": "6527595",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "46209": {
+    "realizado": true,
+    "numeroTicket": "6529991",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "46319": {
+    "realizado": true,
+    "numeroTicket": "6586496",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "46269": {
+    "realizado": true,
+    "numeroTicket": "6578960",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "45363": {
+    "realizado": true,
+    "numeroTicket": "6576817",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "45416": {
+    "realizado": true,
+    "numeroTicket": "6584027",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "46914": {
+    "realizado": true,
+    "numeroTicket": "6592125",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "46839": {
+    "realizado": true,
+    "numeroTicket": "6594919",
+    "fechaMantenimiento": "2026-09-25"
+  },
+  "46968": {
+    "realizado": true,
+    "numeroTicket": "6562458",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "47155": {
+    "realizado": true,
+    "numeroTicket": "6595050",
+    "fechaMantenimiento": "2026-09-25"
+  },
+  "47180": {
+    "realizado": true,
+    "numeroTicket": "6584388",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "47411": {
+    "realizado": true,
+    "numeroTicket": "6557618",
+    "fechaMantenimiento": "2026-09-09"
+  },
+  "47446": {
+    "realizado": true,
+    "numeroTicket": "6589679",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "47569": {
+    "realizado": true,
+    "numeroTicket": "6592243",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "47600": {
+    "realizado": true,
+    "numeroTicket": "6562447",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "47628": {
+    "realizado": true,
+    "numeroTicket": "6589720",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "47791": {
+    "realizado": true,
+    "numeroTicket": "6579079",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "47792": {
+    "realizado": true,
+    "numeroTicket": "6557769",
+    "fechaMantenimiento": "2026-09-09"
+  },
+  "47921": {
+    "realizado": true,
+    "numeroTicket": "6538328",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "47919": {
+    "realizado": true,
+    "numeroTicket": "6552977",
+    "fechaMantenimiento": "2026-09-08"
+  },
+  "47907": {
+    "realizado": true,
+    "numeroTicket": "6593044",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "47960": {
+    "realizado": true,
+    "numeroTicket": "6542911",
+    "fechaMantenimiento": "2026-09-04"
+  },
+  "47971": {
+    "realizado": true,
+    "numeroTicket": "6577400",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "250020": {
+    "realizado": true,
+    "numeroTicket": "6529773",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "250022": {
+    "realizado": true,
+    "numeroTicket": "6579342",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "250004": {
+    "realizado": true,
+    "numeroTicket": "6592108",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "250310": {
+    "realizado": true,
+    "numeroTicket": "6592207",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "250372": {
+    "realizado": true,
+    "numeroTicket": "6577365",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "250370": {
+    "realizado": true,
+    "numeroTicket": "6579018",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "300049": {
+    "realizado": true,
+    "numeroTicket": "6581152",
+    "fechaMantenimiento": "2026-09-19"
+  },
+  "300122": {
+    "realizado": true,
+    "numeroTicket": "6586568",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "300277": {
+    "realizado": true,
+    "numeroTicket": "6592198",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "300434": {
+    "realizado": true,
+    "numeroTicket": "6586527",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "300526": {
+    "realizado": true,
+    "numeroTicket": "6560038",
+    "fechaMantenimiento": "2026-09-10"
+  },
+  "300529": {
+    "realizado": true,
+    "numeroTicket": "6562739",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "300555": {
+    "realizado": true,
+    "numeroTicket": "6579075",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "300703": {
+    "realizado": true,
+    "numeroTicket": "6568399",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "300725": {
+    "realizado": true,
+    "numeroTicket": "6527508",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "300743": {
+    "realizado": true,
+    "numeroTicket": "6583319",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "300765": {
+    "realizado": true,
+    "numeroTicket": "6560018",
+    "fechaMantenimiento": "2026-09-10"
+  },
+  "300830": {
+    "realizado": true,
+    "numeroTicket": "6568419",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "300832": {
+    "realizado": true,
+    "numeroTicket": "6562753",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "300874": {
+    "realizado": true,
+    "numeroTicket": "6538344",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "300936": {
+    "realizado": true,
+    "numeroTicket": "6581154",
+    "fechaMantenimiento": "2026-09-19"
+  },
+  "301005": {
+    "realizado": true,
+    "numeroTicket": "6529772",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "300892": {
+    "realizado": true,
+    "numeroTicket": "6560023",
+    "fechaMantenimiento": "2026-09-10"
+  },
+  "301010": {
+    "realizado": true,
+    "numeroTicket": "6527763",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "301046": {
+    "realizado": true,
+    "numeroTicket": "6592123",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "301097": {
+    "realizado": true,
+    "numeroTicket": "6586624",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "301196": {
+    "realizado": true,
+    "numeroTicket": "6584296",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "301231": {
+    "realizado": true,
+    "numeroTicket": "6578955",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "301234": {
+    "realizado": true,
+    "numeroTicket": "6568435",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "301236": {
+    "realizado": true,
+    "numeroTicket": "6592193",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "301576": {
+    "realizado": true,
+    "numeroTicket": "6581322",
+    "fechaMantenimiento": "2026-09-19"
+  },
+  "301667": {
+    "realizado": true,
+    "numeroTicket": "6562466",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "302178": {
+    "realizado": true,
+    "numeroTicket": "6589669",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "302223": {
+    "realizado": true,
+    "numeroTicket": "6589699",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "302277": {
+    "realizado": true,
+    "numeroTicket": "6527507",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "302451": {
+    "realizado": true,
+    "numeroTicket": "6568491",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "302563": {
+    "realizado": true,
+    "numeroTicket": "6586618",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "302562": {
+    "realizado": true,
+    "numeroTicket": "6557510",
+    "fechaMantenimiento": "2026-09-09"
+  },
+  "302564": {
+    "realizado": true,
+    "numeroTicket": "6579088",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "302656": {
+    "realizado": true,
+    "numeroTicket": "6563312",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "302561": {
+    "realizado": true,
+    "numeroTicket": "6586528",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "302678": {
+    "realizado": true,
+    "numeroTicket": "6568381",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "302584": {
+    "realizado": true,
+    "numeroTicket": "6578964",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "302700": {
+    "realizado": true,
+    "numeroTicket": "6578089",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "302717": {
+    "realizado": true,
+    "numeroTicket": "6549127",
+    "fechaMantenimiento": "2026-09-07"
+  },
+  "302752": {
+    "realizado": true,
+    "numeroTicket": "6576751",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "302753": {
+    "realizado": true,
+    "numeroTicket": "6568368",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "302713": {
+    "realizado": true,
+    "numeroTicket": "6568429",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "302874": {
+    "realizado": true,
+    "numeroTicket": "6538252",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "302885": {
+    "realizado": true,
+    "numeroTicket": "6583313",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "302982": {
+    "realizado": true,
+    "numeroTicket": "6584345",
+    "fechaMantenimiento": "2026-09-21"
+  },
+  "302984": {
+    "realizado": true,
+    "numeroTicket": "6592485",
+    "fechaMantenimiento": "2026-09-24"
+  },
+  "303041": {
+    "realizado": true,
+    "numeroTicket": "6527510",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "302898": {
+    "realizado": true,
+    "numeroTicket": "6586615",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "303070": {
+    "realizado": true,
+    "numeroTicket": "6574650",
+    "fechaMantenimiento": "2026-09-11"
+  },
+  "303108": {
+    "realizado": true,
+    "numeroTicket": "6576806",
+    "fechaMantenimiento": "2026-09-17"
+  },
+  "303168": {
+    "realizado": true,
+    "numeroTicket": "6579085",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "303177": {
+    "realizado": true,
+    "numeroTicket": "6578958",
+    "fechaMantenimiento": "2026-09-18"
+  },
+  "303179": {
+    "realizado": true,
+    "numeroTicket": "6571468",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "303198": {
+    "realizado": true,
+    "numeroTicket": "6573823",
+    "fechaMantenimiento": "2026-09-16"
+  },
+  "303457": {
+    "realizado": true,
+    "numeroTicket": "6571412",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "303470": {
+    "realizado": true,
+    "numeroTicket": "6531182",
+    "fechaMantenimiento": "2026-09-01"
+  },
+  "303480": {
+    "realizado": true,
+    "numeroTicket": "6581145",
+    "fechaMantenimiento": "2026-09-19"
+  },
+  "303483": {
+    "realizado": true,
+    "numeroTicket": "6572806",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "303485": {
+    "realizado": true,
+    "numeroTicket": "6535877",
+    "fechaMantenimiento": "2026-09-02"
+  },
+  "303506": {
+    "realizado": true,
+    "numeroTicket": "6569635",
+    "fechaMantenimiento": "2026-09-14"
+  },
+  "303508": {
+    "realizado": true,
+    "numeroTicket": "6538152",
+    "fechaMantenimiento": "2026-09-03"
+  },
+  "303509": {
+    "realizado": true,
+    "numeroTicket": "6528635",
+    "fechaMantenimiento": "2026-08-31"
+  },
+  "303534": {
+    "realizado": true,
+    "numeroTicket": "6573375",
+    "fechaMantenimiento": "2026-09-16"
+  },
+  "303535": {
+    "realizado": true,
+    "numeroTicket": "6573371",
+    "fechaMantenimiento": "2026-09-16"
+  },
+  "303536": {
+    "realizado": true,
+    "numeroTicket": "6573370",
+    "fechaMantenimiento": "2026-09-16"
+  },
+  "303554": {
+    "realizado": true,
+    "numeroTicket": "6586529",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "303556": {
+    "realizado": true,
+    "numeroTicket": "6571963",
+    "fechaMantenimiento": "2026-09-15"
+  },
+  "303557": {
+    "realizado": true,
+    "numeroTicket": "6567005",
+    "fechaMantenimiento": "2026-09-12"
+  },
+  "303559": {
+    "realizado": true,
+    "numeroTicket": "6566976",
+    "fechaMantenimiento": "2026-09-12"
+  },
+  "303578": {
+    "realizado": true,
+    "numeroTicket": "6589732",
+    "fechaMantenimiento": "2026-09-23"
+  },
+  "303577": {
+    "realizado": true,
+    "numeroTicket": "6587807",
+    "fechaMantenimiento": "2026-09-22"
+  },
+  "303598": {
+    "realizado": true,
+    "numeroTicket": "6595078",
+    "fechaMantenimiento": "2026-09-25"
   }
 }
